@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
 
-  <body>
-    <script src="./myscript.js"></script>
-    <script>
-      var weburl = window.location.href;
-      showModal({
-        heading:
-          "<h5><strong>Get 10% OFF using</strong> <br />the Company Name app</h5>",
-        content:
-          "<p>Scan our QR code below to download the app on your device and unlock the discount</p>",
-        banner_position: "modal-dialog-bottom-right",
-        weburl: weburl,
-        border_radius: 5,
-        text_color: "#000000",
-        background_color: "#FFFFFF",
-      });
-    </script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="./qr-widget.js"></script>
+  <script>
+    var weburl = window.location.href;
+    showModal({
+      heading:
+        "Get 10% OFF using <br />the Company Name app",
+      content:
+        "Scan our QR code below to download the app on your device and unlock the discount",
+      banner_position: "top-left",
+      weburl: weburl,
+      border_radius: 10,
+      text_color: "#000000",
+      background_color: "#FFFFFF",
+    });
+
+  </script>
+</body>
+
 </html>
