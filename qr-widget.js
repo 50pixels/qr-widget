@@ -198,10 +198,9 @@ function showModal({
   text_color,
   background_color,
 }) {
-  if (getCookie("qr-widget") != null) {
+  if (getCookie("qr-widget") == 'closed') {
     return;
   }
-  createCookie("qr-widget", "created", 7);
 
   var plateform;
 
@@ -244,6 +243,7 @@ function showModal({
   // Close the modal
   closeButton.onclick = function () {
     document.getElementsByClassName("modal")[0].classList.add("fade-out");
+    createCookie("qr-widget", "closed", 7);
     setTimeout(() => {
       document.getElementById("myModal").style.display = "none";
     }, 500);
