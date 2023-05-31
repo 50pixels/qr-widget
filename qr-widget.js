@@ -44,8 +44,33 @@ function addModalDialogStyles(border_radius, text_color, background_color) {
         width: 306px;
         height: 534px;
       }
-  
-  
+      
+      .modal {
+        position: relative;
+        background: #FFFFFF;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+        width: 100%;
+        height: 100%;
+        
+      }
+      
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .fade-in {
+        animation-name: fadeIn;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in;
+        animation-fill-mode: forwards;
+      }     
+
       @keyframes fadeOut {
         from {
           opacity: 1;
@@ -55,27 +80,18 @@ function addModalDialogStyles(border_radius, text_color, background_color) {
         }
       }
 
-      .modal {
-        position: relative;
-        background: #FFFFFF;
-        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-        border-radius: 10px;
-        width: 100%;
-        height: 100%;
-        
-    }
-    
-    .fade-out {
+      .fade-out {
         animation-name: fadeOut;
-        animation-duration: 0.5s;
+      animation-duration: 0.5s;
         animation-timing-function: ease-out;
         animation-fill-mode: forwards;
       }     
-  
+
+      
       #myModal {
         position: absolute;
         width: 306px;
-        height: 475px;
+        height: 465px;
         left: 0px;
         top: 0px;
         background: ${background_color};
@@ -87,7 +103,7 @@ function addModalDialogStyles(border_radius, text_color, background_color) {
       .modal-content {
         padding: 20px;
       }
-  
+      
       .close {
         font-size: 26px;
         position: absolute;
@@ -101,7 +117,8 @@ function addModalDialogStyles(border_radius, text_color, background_color) {
         width: 252px;
         height: 69px;
         left: 30px;
-        top: 116px;
+        right: 30px;
+        top: 85px;
         font-family: 'Inter', sans-serif;
         font-style: normal;
         font-weight: 400;
@@ -109,20 +126,23 @@ function addModalDialogStyles(border_radius, text_color, background_color) {
         line-height: 145%;
         color: ${text_color};
       }
-  
+      
       .qr-code-image {
         max-width: 100%;
         height: auto;
+        margin-top: 10px;
       }
   
       .qr-code-text {
         margin-top: 0;
+        margin-bottom: 15px;
       }
   
       .discount-section {
         position: absolute;
         height: 56px;
         left: 30px;
+        right: 30px;
         top: 30px;
         font-family: 'Inter', sans-serif;
         font-style: normal;
@@ -139,6 +159,36 @@ function addModalDialogStyles(border_radius, text_color, background_color) {
   document.head.appendChild(styleEl);
 }
 
+function createCookie(name, value, days) {
+  if (!getCookie(name)) {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    const cookieValue =
+      encodeURIComponent(value) +
+      "; expires=" +
+      expires.toUTCString() +
+      "; path=/";
+    document.cookie = name + "=" + cookieValue;
+  }
+}
+
+function getCookie(name) {
+  const cookieName = name + "=";
+  const cookieArray = document.cookie.split(";");
+
+  for (let i = 0; i < cookieArray.length; i++) {
+    let cookie = cookieArray[i];
+    while (cookie.charAt(0) === " ") {
+      cookie = cookie.sDubstring(1);
+    }
+    if (cookie.indexOf(cookieName) === 0) {
+      return cookie.substring(cookieName.length, cookie.length);
+    }
+  }
+
+  return null;
+}
+
 function showModal({
   heading,
   content,
@@ -148,6 +198,11 @@ function showModal({
   text_color,
   background_color,
 }) {
+  if (getCookie("qr-widget") != null) {
+    return;
+  }
+  createCookie("qr-widget", "created", 7);
+
   var plateform;
 
   // Check if the user is using Android
@@ -175,7 +230,7 @@ function showModal({
   // Create the modal
   const modal = document.createElement("div");
   modal.id = "myModal";
-  modal.classList.add("modal");
+  modal.classList.add("modal", "fade-in");
 
   // Create the modal content
   const modalContent = document.createElement("div");
